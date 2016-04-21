@@ -1,0 +1,308 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{CA9E4D1C-C24D-4B86-B667-900A80E011F4}</ProjectGuid>
+    <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VSNav</RootNamespace>
+    <AssemblyName>VSNav</AssemblyName>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>Key.snk</AssemblyOriginatorKeyFile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualStudio.OLE.Interop" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop.8.0" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop.9.0" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop.10.0" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop.11.0">
+      <EmbedInteropTypes>true</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.TextManager.Interop" />
+    <Reference Include="Microsoft.VisualStudio.Shell.11.0" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Immutable.10.0" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Immutable.11.0" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="EnvDTE">
+      <Guid>{80CC9F66-E7D8-4DDD-85B6-D9E6CD0E93E2}</Guid>
+      <VersionMajor>8</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="EnvDTE100">
+      <Guid>{26AD1324-4B7C-44BC-84F8-B86AED45729F}</Guid>
+      <VersionMajor>10</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="EnvDTE80">
+      <Guid>{1A31287A-4D7D-413E-8E32-3B374931BD89}</Guid>
+      <VersionMajor>8</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="EnvDTE90">
+      <Guid>{2CE2370E-D744-4936-A090-3FFFE667B0E1}</Guid>
+      <VersionMajor>9</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.VisualStudio.CommandBars">
+      <Guid>{1CBA492E-7263-47BB-87FE-639000619B15}</Guid>
+      <VersionMajor>8</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Code\Comparing\ProjectInfo.cs" />
+    <Compile Include="Code\Comparing\ProjectItemInfo.cs" />
+    <Compile Include="Code\Resources\IImages.cs" />
+    <Compile Include="Code\Resources\Images.cs" />
+    <Compile Include="Code\Resources\Styles.cs" />
+    <Compile Include="Code\Comparing\DoubleComparer.cs" />
+    <Compile Include="Code\Gathering\EventManager.cs" />
+    <Compile Include="Code\Gathering\FileGatherer.cs" />
+    <Compile Include="Code\Comparing\FileInfo.cs" />
+    <Compile Include="Code\Gathering\Gatherer.cs" />
+    <Compile Include="Code\Comparing\NameInfo.cs" />
+    <Compile Include="Code\Comparing\StringMatch.cs" />
+    <Compile Include="Code\Comparing\StringPart.cs" />
+    <Compile Include="Code\Gathering\CodeGatherer.cs" />
+    <Compile Include="Code\Resources\IStyle.cs" />
+    <Compile Include="Code\UI\FileNav.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Code\UI\FileNav.Designer.cs">
+      <DependentUpon>FileNav.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Code\UI\FilterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Code\UI\FilterControl.Designer.cs">
+      <DependentUpon>FilterControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Code\UI\FilterTextBoxCell.cs" />
+    <Compile Include="Code\UI\FilterTextBoxColumn.cs" />
+    <Compile Include="Code\UI\FileDataGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Code\Utils.cs" />
+    <Compile Include="Code\Version.cs" />
+    <Compile Include="Guids.cs" />
+    <Compile Include="Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="VSNavPackage.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PkgCmdID.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Code\UI\FileNav.resx">
+      <DependentUpon>FileNav.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Code\UI\FilterControl.resx">
+      <DependentUpon>FilterControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VSPackage.resx">
+      <MergeWithCTO>true</MergeWithCTO>
+      <ManifestResourceName>VSPackage</ManifestResourceName>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="source.extension.vsixmanifest">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Key.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <VSCTCompile Include="VSNav.vsct">
+      <ResourceName>Menus.ctmenu</ResourceName>
+    </VSCTCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Code\Resources\VS2010\ASP.png" />
+    <EmbeddedResource Include="Code\Resources\VS2010\ClassDiagram.png" />
+    <EmbeddedResource Include="Code\Resources\VS2010\CPlusPlus.png" />
+    <EmbeddedResource Include="Code\Resources\VS2010\CSharp.png" />
+    <EmbeddedResource Include="Code\Resources\VS2010\FSharp.png" />
+    <EmbeddedResource Include="Code\Resources\VS2010\Header.png" />
+    <EmbeddedResource Include="Code\Resources\VS2010\Html.png" />
+    <EmbeddedResource Include="Code\Resources\VS2010\Icon.png" />
+    <EmbeddedResource Include="Code\Resources\VS2010\IDL.png" />
+    <EmbeddedResource Include="Code\Resources\VS2010\Image.png" />
+    <EmbeddedResource Include="Code\Resources\VS2010\Magnify.png" />
+    <EmbeddedResource Include="Code\Resources\VS2010\MagnifyPlus.png" />
+    <EmbeddedResource Include="Code\Resources\VS2010\Resource.png" />
+    <EmbeddedResource Include="Code\Resources\VS2010\Script.png" />
+    <EmbeddedResource Include="Code\Resources\VS2010\Settings.png" />
+    <EmbeddedResource Include="Code\Resources\VS2010\Snippet.png" />
+    <EmbeddedResource Include="Code\Resources\VS2010\StyleSheet.png" />
+    <EmbeddedResource Include="Code\Resources\VS2010\Template.png" />
+    <EmbeddedResource Include="Code\Resources\VS2010\Text.png" />
+    <EmbeddedResource Include="Code\Resources\VS2010\VisualBasic.png" />
+    <EmbeddedResource Include="Code\Resources\VS2010\XAML.png" />
+    <EmbeddedResource Include="Code\Resources\VS2010\XML.png" />
+    <EmbeddedResource Include="Code\Resources\VS2010\XSD.png" />
+    <EmbeddedResource Include="Code\Resources\VS2010\XSLT.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Dark\ASCX.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Dark\ASP.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Dark\ASPX.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Dark\ClassDiagram.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Dark\Config.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Dark\CPlusPlus.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Dark\CSharp.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Dark\EDMX.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Dark\FScript.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Dark\FSharp.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Dark\FSig.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Dark\Header.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Dark\Html.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Dark\Icon.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Dark\IDL.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Dark\Image.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Dark\Manifest.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Dark\Master.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Dark\Resource.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Dark\Ruleset.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Dark\Script.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Dark\Sequence.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Dark\Settings.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Dark\Sitemap.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Dark\Skin.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Dark\Snippet.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Dark\StyleSheet.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Dark\Template.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Dark\Text.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Dark\VisualBasic.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Dark\XAML.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Dark\XML.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Dark\XSD.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Dark\XSLT.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Light\ASCX.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Light\ASP.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Light\ASPX.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Light\ClassDiagram.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Light\Config.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Light\CPlusPlus.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Light\CSharp.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Light\EDMX.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Light\FScript.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Light\FSharp.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Light\FSig.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Light\Header.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Light\Html.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Light\Icon.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Light\IDL.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Light\Image.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Light\Manifest.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Light\Master.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Light\Resource.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Light\Ruleset.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Light\Script.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Light\Sequence.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Light\Settings.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Light\Sitemap.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Light\Skin.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Light\Snippet.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Light\StyleSheet.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Light\Template.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Light\Text.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Light\VisualBasic.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Light\XAML.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Light\XML.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Light\XSD.png" />
+    <EmbeddedResource Include="Code\Resources\VS2012Light\XSLT.png" />
+    <Content Include="Resources\Package.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+  </ItemGroup>
+  <PropertyGroup>
+    <UseCodebase>true</UseCodebase>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
