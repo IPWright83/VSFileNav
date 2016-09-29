@@ -44,6 +44,6 @@ namespace VSNav.Tests
             Assert.AreEqual(4, match);
             Assert.AreEqual("x", match.Parts[0]);
             Assert.AreEqual("test", match.Parts[1]);
-        }]
+        }
     }
 }
