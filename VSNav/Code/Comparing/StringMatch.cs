@@ -79,7 +79,7 @@ namespace VSNav
         {
             this.MatchFraction = ((double)matchString.Length / (double)fullString.Length);
 
-            int startIndex = fullString.ToLower().IndexOf(matchString.ToLower());
+            int startIndex = fullString.IndexOf(matchString.ToLower(), StringComparison.OrdinalIgnoreCase);
             int length = matchString.Length;
 
             // Get the 1st part of the String
