@@ -1,15 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSNav", "VSNav\VSNav.csproj", "{CA9E4D1C-C24D-4B86-B667-900A80E011F4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSNav_IntegrationTests", "VSNav\VSNav_IntegrationTests\VSNav_IntegrationTests.csproj", "{C61D1C06-E1F1-4BB4-96D3-C1E9B232A39C}"
-EndProject
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{65640CBA-4D9C-4AE3-83F4-83FF4D099A52}"
 	ProjectSection(SolutionItems) = preProject
 		IntegrationTests.testsettings = IntegrationTests.testsettings
 		UnitTests.testsettings = UnitTests.testsettings
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSNav", "VSNav\VSNav.csproj", "{CA9E4D1C-C24D-4B86-B667-900A80E011F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSNav_IntegrationTests", "VSNav\VSNav_IntegrationTests\VSNav_IntegrationTests.csproj", "{C61D1C06-E1F1-4BB4-96D3-C1E9B232A39C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VSNav_UnitTests", "VSNav\VSNav_UnitTests\VSNav_UnitTests.csproj", "{74CA841A-B716-48F5-A87D-17B9E05A05ED}"
 EndProject
