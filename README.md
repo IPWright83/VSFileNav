@@ -4,6 +4,10 @@ This is a simple extention to allow rapid navigation and finding of files within
 
 For more information please visit https://github.com/IPWright83/VSFileNav
 
+#### New Features
+ - Multi montior support
+ - Multi search
+
 ### Features
 
 VSFileNav supports a number of features including:
