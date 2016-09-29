@@ -83,6 +83,7 @@ namespace VSNav
             this.Name = "FileNav";
             this.Padding = new System.Windows.Forms.Padding(6);
             this.Text = "QuickFileNavigation";
+            this.ResizeEnd += new System.EventHandler(this.FileNav_ResizeEnd);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).EndInit();

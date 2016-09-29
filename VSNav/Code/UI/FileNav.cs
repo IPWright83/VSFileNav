@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -18,6 +19,9 @@ namespace VSNav
         private List<FileInfo> allFiles;
         private FileGatherer fileGatherer;
 
+        private static Point? lastLocation = null;
+        private static Size? lastSize = null;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="QuickFileNav"/> class.
         /// </summary>
@@ -25,6 +29,15 @@ namespace VSNav
         public FileNav(FileGatherer fileGatherer)
         {
             InitializeComponent();
+
+            if (lastSize.HasValue) this.Size = lastSize.Value;
+            if (lastLocation.HasValue)
+            {
+                this.WindowState = FormWindowState.Normal;
+                this.StartPosition = FormStartPosition.Manual;
+                this.BringToFront();
+                this.Location = lastLocation.Value;
+            }
 
             this.fileGatherer = fileGatherer;
             this.allFiles = fileGatherer.Files;
@@ -213,6 +226,15 @@ namespace VSNav
             base.OnShown(e);
             this.filter.txtFilter.Focus();
             this.filter.txtFilter.SelectAll();
+        }
+
+        /// <summary>
+        /// Raised when the form has finished moving
+        /// </summary>
+        private void FileNav_ResizeEnd(object sender, EventArgs e)
+        {
+            lastSize = this.Size;
+            lastLocation = this.Location;
         }
     }
 }
