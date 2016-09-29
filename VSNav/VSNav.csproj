@@ -137,6 +137,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Code\Comparing\MatchComparer.cs" />
     <Compile Include="Code\Comparing\ProjectInfo.cs" />
     <Compile Include="Code\Comparing\ProjectItemInfo.cs" />
     <Compile Include="Code\Resources\IImages.cs" />

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace VSNav
@@ -11,6 +12,8 @@ namespace VSNav
     /// </summary>
     public class StringMatch
     {
+        public delegate StringMatch GetMatchDelegate(String value);
+
         private StringMatch()
         {
             this.Parts = new List<StringPart>();
@@ -96,6 +99,160 @@ namespace VSNav
             {
                 this.Parts.Add(new StringPart(fullString.Substring(startIndex + length), false));
             }
+        }
+
+        /// <summary>
+        /// Returns a delegate that will find a StringMatch for a given pattern
+        /// where that pattern may be composed of multiple strings
+        /// </summary>
+        public static GetMatchDelegate GetShowStringDelegates(String fullPattern)
+        {
+            List<GetMatchDelegate> matchFuncs = new List<GetMatchDelegate>();
+            String[] patterns = fullPattern.Split(new char[] { ' ' });
+            foreach (String pattern in patterns)
+            {
+                matchFuncs.Add(GetShowStringDelegate(pattern));
+            }
+
+            return (s) =>
+            {
+                List<StringMatch> matches = new List<StringMatch>();
+                foreach (GetMatchDelegate func in matchFuncs)
+                {
+                    StringMatch match = func(s);
+                    matches.Add(match);
+                }
+
+                matches.Sort(new MatchComparer());
+                return matches.First();
+            };
+        }
+
+        /// <summary>
+        /// Returns a delegate that will find a StringMatch for a given pattern
+        /// </summary>
+        private static GetMatchDelegate GetShowStringDelegate(String pattern)
+        {
+            #region Empty String
+
+            // We have no filter
+            if (String.IsNullOrEmpty(pattern))
+            {
+                return (s) =>
+                {
+                    return new StringMatch(1, s);
+                };
+            }
+
+            #endregion
+
+            #region Camel Case
+
+            // Is it all uppercase?
+            if (pattern.Length > 1)
+            {
+                int i = 0;
+                foreach (char c in pattern)
+                {
+                    if (!Char.IsUpper(c)) { break; }
+                    i++;
+                }
+
+                //It's all upper case so do camel searching
+                if (i == pattern.Length)
+                {
+                    return (s) =>
+                    {
+                        // Grab all the Uppercase characters from the source String
+                        List<int> skippedChars = new List<int>();
+                        List<int> matchedChars = new List<int>();
+
+                        // Grab the match char
+                        int matchIndex = 0;
+                        char matchChar = pattern[matchIndex];
+
+                        // Go through all the characters
+                        for (int charIndex = 0; charIndex < s.Length; charIndex++)
+                        {
+                            // Skip lower case
+                            Char c = s[charIndex];
+                            if (!Char.IsUpper(c)) { continue; }
+
+                            // We matched
+                            if (c == matchChar)
+                            {
+                                // Add the character
+                                matchedChars.Add(charIndex);
+
+                                // Move to the next matching character
+                                matchIndex++;
+                                if (matchIndex < pattern.Length)
+                                {
+                                    matchChar = pattern[matchIndex];
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                            else { skippedChars.Add(charIndex); } // We skipped a missed out camel
+                        }
+
+                        // If we didn't find all the camels then we ignore this result
+                        if (matchedChars.Count != pattern.Length)
+                        {
+                            return new StringMatch(0, String.Empty);
+                        }
+                        else
+                        {
+                            return new StringMatch(s, matchedChars, skippedChars);
+                        }
+                    };
+                }
+            }
+
+            #endregion
+
+            #region String Contains
+
+            // Just do a normal String.Contains
+            if (!pattern.Contains("?") && !pattern.Contains("*"))
+            {
+                return (s) =>
+                {
+                    if (s.ToLower().Contains(pattern.ToLower()))
+                    {
+                        return new StringMatch(s, pattern);
+                    }
+                    return new StringMatch(0, String.Empty);
+                };
+            }
+
+            #endregion
+
+            #region Regex
+
+            // Build up the Regex statement
+            String regexString = "^";
+            foreach (char c in pattern)
+            {
+                if (c == '?') { regexString += "."; }
+                else if (c == '*') { regexString += ".*"; }
+                else { regexString += c; }
+            }
+
+            return (s) =>
+            {
+                Match match = Regex.Match(s, regexString, RegexOptions.IgnoreCase);
+                if (match.Success)
+                {
+                    return new StringMatch(s, match.Value);
+                }
+
+                return new StringMatch(0, String.Empty);
+            };
+
+            #endregion
         }
 
         /// <summary>

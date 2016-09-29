@@ -144,14 +144,14 @@ namespace VSNav
         /// </summary>
         private void UpdateFilter()
         {
-            ShowStringDelegate showStringDelegate = this.filter.GetShowStringDelegate();
+            StringMatch.GetMatchDelegate showStringDelegate = StringMatch.GetShowStringDelegates(this.filter.txtFilter.Text.Trim());
             IComparer<FileInfo> comparer = new DoubleComparer();
             List<FileInfo> filteredFiles = allFiles.Where((f) =>
             {
                 f.NameInfo.MatchInfo = showStringDelegate(f.Name);
                 return f.NameInfo.MatchInfo.MatchFraction > 0;
             })
-                .ToList();
+            .ToList();
 
             filteredFiles.Sort(comparer);
             this.dataGrid.RefreshData(filteredFiles);
