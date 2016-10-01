@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VSNav.Code.UI;
 
 namespace VSNav
 {
@@ -20,41 +21,33 @@ namespace VSNav
 
     public static class Version
     {
+        private static VSNavPackage package;
+
+        public static void Initialize(VSNavPackage pckg)
+        {
+            if (pckg == null) throw new ArgumentNullException("pckg");
+            package = pckg;
+        }
+
         /// <summary>
         /// Current Version
         /// </summary>
         public static VS_Version VSVersion
         {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// Update the version of Visual Studio
-        /// </summary>
-        /// <param name="serviceProvider"></param>
-        public static void Update(DTE dte, ServiceProvider serviceProvider)
-        {
-            string version = ((EnvDTE.DTE)serviceProvider.GetService(typeof(EnvDTE.DTE).GUID)).Version;
-            if (version == "10.0")
+            get
             {
-                VSVersion = VS_Version.VS2010;
-            }
-            else
-            {
-                VSVersion = VS_Version.VS2012Light;
-
-                try
+                OptionsPage page = package.GetPage();
+                if(page != null)
                 {
-                    FontsAndColorsItems f = (FontsAndColorsItems)dte.get_Properties("FontsAndColors", "TextEditor").Item("FontsAndColorsItems").Object;
-                    UInt32 background = f.Item("Keyword").Background;
-                    if (background != 16777215)
+                    switch(page.Theme)
                     {
-                        VSVersion = VS_Version.VS2012Dark;
+                        case Code.Theme.Blue: return VS_Version.VS2010;
+                        case Code.Theme.Light: return VS_Version.VS2012Light;
+                        case Code.Theme.Dark: return VS_Version.VS2012Dark;
                     }
                 }
-                catch (Exception)
-                { /* Ignore - just use light */}
+
+                return VS_Version.VS2012Light;
             }
         }
     }

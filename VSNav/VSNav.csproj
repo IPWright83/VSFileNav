@@ -152,8 +152,8 @@
     <Compile Include="Code\Comparing\NameInfo.cs" />
     <Compile Include="Code\Comparing\StringMatch.cs" />
     <Compile Include="Code\Comparing\StringPart.cs" />
-    <Compile Include="Code\Gathering\CodeGatherer.cs" />
     <Compile Include="Code\Resources\IStyle.cs" />
+    <Compile Include="Code\Theme.cs" />
     <Compile Include="Code\UI\FileNav.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -169,6 +169,9 @@
     <Compile Include="Code\UI\FilterTextBoxCell.cs" />
     <Compile Include="Code\UI\FilterTextBoxColumn.cs" />
     <Compile Include="Code\UI\FileDataGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Code\UI\OptionsPage.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Code\Utils.cs" />
@@ -333,7 +336,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(TargetDir)VSNav.vsix" "$(SolutionDir)"</PostBuildEvent>
+    <PostBuildEvent>xcopy "$(TargetDir)VSNav.vsix" "$(SolutionDir)" /Y</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -8,6 +8,7 @@ using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
+using VSNav.Code.UI;
 
 namespace VSNav
 {
@@ -30,11 +31,11 @@ namespace VSNav
     // This attribute is needed to let the shell know that this package exposes some menus.
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [Guid(GuidList.guidVSNavPkgString)]
+    [ProvideOptionPage(typeof(OptionsPage), "VSFileNav Options", "General", 0x65, 0x6a, true)]
     [ProvideAutoLoad("D2567162-F94F-4091-8798-A096E61B8B50")]
     public sealed class VSNavPackage : Package
     {
         EventManager manager;
-        ClassGatherer classGatherer;
         FileGatherer fileGatherer;
 
         /// <summary>
@@ -73,13 +74,16 @@ namespace VSNav
             }
 
             this.manager = new EventManager();
-            Version.Update(this.manager.DTE, ServiceProvider.GlobalProvider);
-
-            //this.classGatherer = new ClassGatherer(manager);
+            Version.Initialize(this);
             this.fileGatherer = new FileGatherer(manager);
         }
 
         #endregion
+
+        public OptionsPage GetPage()
+        {
+            return this.GetDialogPage(typeof(OptionsPage)) as OptionsPage;
+        }
 
         /// <summary>
         /// This function is the callback used to execute a command when the a menu item is clicked.
@@ -88,23 +92,6 @@ namespace VSNav
         /// </summary>
         private void MenuItemCallback(object sender, EventArgs e)
         {
-            //// Show a Message Box to prove we were here
-            //IVsUIShell uiShell = (IVsUIShell)GetService(typeof(SVsUIShell));
-            //Guid clsid = Guid.Empty;
-            //int result;
-            //Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(uiShell.ShowMessageBox(
-            //           0,
-            //           ref clsid,
-            //           "VSNav",
-            //           string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.ToString()),
-            //           string.Empty,
-            //           0,
-            //           OLEMSGBUTTON.OLEMSGBUTTON_OK,
-            //           OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST,
-            //           OLEMSGICON.OLEMSGICON_INFO,
-            //           0,        // false
-            //           out result));
-
             FileNav qfn = new FileNav(this.fileGatherer);
             qfn.ShowDialog();
         }
