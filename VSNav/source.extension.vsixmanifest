@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="d1fa1e4a-6cb3-42cd-9141-787813a57c02" Version="15.1" Language="en-US" Publisher="Ian Wright" />
+    <Identity Id="d1fa1e4a-6cb3-42cd-9141-787813a57c02" Version="15.2" Language="en-US" Publisher="Ian Wright" />
     <DisplayName>VSNav</DisplayName>
     <Description xml:space="preserve">This is a simple extention to allow rapid navigation and finding of files within a Solution using a number of different search patterns.
 
@@ -31,4 +31,7 @@ For more information please visit https://github.com/IPWright83/VSFileNav
   <Assets>
     <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
   </Assets>
+  <Prerequisites>
+    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0.26208.0,16.0)" DisplayName="Visual Studio core editor" />
+  </Prerequisites>
 </PackageManifest>
