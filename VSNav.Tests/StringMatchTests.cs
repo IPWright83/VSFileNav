@@ -21,8 +21,8 @@ namespace VSNav.Tests
         {
             var func = StringMatch.GetShowStringDelegates("MFB");
 
-            Assert.AreEqual(7, func("MyFooBar.txt").MatchPriority);
-            Assert.AreEqual(7, func("MyFlipBlob2.jpg").MatchPriority);
+            Assert.AreEqual(7.25, func("MyFooBar.txt").MatchPriority);
+            Assert.AreEqual(7.2, func("MyFlipBlob2.jpg").MatchPriority);
         }
 
         [TestMethod]
@@ -30,9 +30,9 @@ namespace VSNav.Tests
         {
             var func = StringMatch.GetShowStringDelegates("MFB");
 
-            Assert.AreEqual(4, func("ThisIsMyFooBar.txt").MatchPriority);
-            Assert.AreEqual(7, func("MyFlipBlobIsCool.jpg").MatchPriority);
-            Assert.AreEqual(5, func("MySillyFlipFrogBlobs.jpg").MatchPriority);
+            Assert.AreEqual(4.15, func("ThisIsMyFooBar99.txt").MatchPriority);
+            Assert.AreEqual(7.15, func("MyFlipBlobIsCool.jpg").MatchPriority);
+            Assert.AreEqual(5.125, func("MySillyFlipFrogBlobs.jpg").MatchPriority);
         }
 
         [TestMethod]
@@ -111,6 +111,7 @@ namespace VSNav.Tests
             var func = StringMatch.GetShowStringDelegates("test this");
 
             Assert.IsTrue(func("TestThis.txt").MatchPriority > func("Test.txt").MatchPriority);
+            Assert.IsTrue(func("TestThis.txt").MatchPriority > func("TestThisToo.txt").MatchPriority);
         }
     }
 }

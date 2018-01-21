@@ -26,6 +26,7 @@ namespace VSNav
             : this()
         {
             MatchCharacters = 0;
+            MatchFraction = 1;
             MatchPriority = 1;
             Parts.Add(new StringPart(fullString, false));
         }
@@ -75,7 +76,8 @@ namespace VSNav
             }
 
             MatchCharacters = matchChars.Count;
-            MatchPriority += MatchCharacters;
+            MatchFraction = ((Double)MatchCharacters / (Double)fullString.Length);
+            MatchPriority += MatchCharacters + MatchFraction;
         }
 
         /// <summary>
@@ -112,7 +114,8 @@ namespace VSNav
             }
 
             MatchCharacters = matchedLength;
-            MatchPriority = MatchCharacters;
+            MatchFraction = ((Double)MatchCharacters / (Double)fullString.Length);
+            MatchPriority = MatchCharacters + MatchFraction;
         }
 
         /// <summary>
@@ -163,7 +166,8 @@ namespace VSNav
             }
 
             MatchCharacters = matchCount;
-            MatchPriority += MatchCharacters;
+            MatchFraction = ((Double)MatchCharacters / (Double)fullString.Length);
+            MatchPriority += MatchCharacters + MatchFraction;
         }
 
         /// <summary>
@@ -354,6 +358,11 @@ namespace VSNav
         /// The number of characters matched.
         /// </summary>
         private int MatchCharacters;
+
+        /// <summary>
+        /// The total fraction of the filename that has been matched.
+        /// </summary>
+        private Double MatchFraction;
 
         /// <summary>
         /// The final order in the list, including the above character count.
