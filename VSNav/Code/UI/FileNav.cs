@@ -149,7 +149,7 @@ namespace VSNav
             List<FileInfo> filteredFiles = allFiles.Where((f) =>
             {
                 f.NameInfo.MatchInfo = showStringDelegate(f.Name);
-                return f.NameInfo.MatchInfo.MatchFraction > 0;
+                return f.NameInfo.MatchInfo.MatchPriority > 0;
             })
             .ToList();
 

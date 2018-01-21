@@ -9,7 +9,7 @@ namespace VSNav
     {
         public int Compare(FileInfo x, FileInfo y)
         {
-            int compare = x.NameInfo.MatchInfo.MatchFraction.CompareTo(y.NameInfo.MatchInfo.MatchFraction);
+            int compare = x.NameInfo.MatchInfo.MatchPriority.CompareTo(y.NameInfo.MatchInfo.MatchPriority);
             if (compare == 0)
             {
                 return x.Name.CompareTo(y.Name);
