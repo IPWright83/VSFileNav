@@ -86,34 +86,25 @@ namespace VSNav
         public StringMatch(String fullString, String matchString)
             : this()
         {
-            var remainingString = fullString;
+            int startIndex = fullString.IndexOf(matchString.ToLower(), StringComparison.OrdinalIgnoreCase);
             int length = matchString.Length;
-            int matchedLength = 0;
-            int startIndex = 0;
-            while ((startIndex = remainingString.IndexOf(matchString.ToLower(), StringComparison.OrdinalIgnoreCase)) >= 0)
-            {
-                var nonMatchedPart = remainingString.Substring(0, startIndex);
-                if (nonMatchedPart.Length > 0)
-                {
-                    Parts.Add(new StringPart(nonMatchedPart, false));
-                }
 
-                var matchedPart = remainingString.Substring(startIndex, length);
-                if (matchedPart.Length > 0)
-                {
-                    Parts.Add(new StringPart(matchedPart, true));
-                }
-
-                remainingString = remainingString.Substring(startIndex + length);
-                matchedLength += length;
-            }
-            
-            if (remainingString.Length > 0)
+            // Get the 1st part of the String
+            if (startIndex > 0)
             {
-                Parts.Add(new StringPart(remainingString, false));
+                Parts.Add(new StringPart(fullString.Substring(0, startIndex), false));
             }
 
-            MatchCharacters = matchedLength;
+            // Get the next matched part of the String
+            Parts.Add(new StringPart(fullString.Substring(startIndex, length), true));
+
+            // Get the last part of the String
+            if (startIndex + length < fullString.Length)
+            {
+                Parts.Add(new StringPart(fullString.Substring(startIndex + length), false));
+            }
+
+            MatchCharacters = length;
             MatchFraction = ((Double)MatchCharacters / (Double)fullString.Length);
             MatchPriority = MatchCharacters + MatchFraction;
         }

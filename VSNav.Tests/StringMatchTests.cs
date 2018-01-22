@@ -49,13 +49,10 @@ namespace VSNav.Tests
             var func = StringMatch.GetShowStringDelegates("test");
 
             var match = func("thisisatest mytest xtest");
-            Assert.AreEqual(6, match.Parts.Count);
-            Assert.AreEqual("thisisa",  match.Parts[0].Text);
-            Assert.AreEqual("test",     match.Parts[1].Text);
-            Assert.AreEqual(" my",      match.Parts[2].Text);
-            Assert.AreEqual("test",     match.Parts[3].Text);
-            Assert.AreEqual(" x",       match.Parts[4].Text);
-            Assert.AreEqual("test",     match.Parts[5].Text);
+            Assert.AreEqual(3, match.Parts.Count);
+            Assert.AreEqual("thisisa",          match.Parts[0].Text);
+            Assert.AreEqual("test",             match.Parts[1].Text);
+            Assert.AreEqual(" mytest xtest",    match.Parts[2].Text);
         }
 
         [TestMethod]
@@ -64,14 +61,11 @@ namespace VSNav.Tests
             var func = StringMatch.GetShowStringDelegates("test this");
 
             var match = func("thisisatest mytest xtest");
-            Assert.AreEqual(7, match.Parts.Count);
-            Assert.AreEqual("this",     match.Parts[0].Text);
-            Assert.AreEqual("isa",      match.Parts[1].Text);
-            Assert.AreEqual("test",     match.Parts[2].Text);
-            Assert.AreEqual(" my",      match.Parts[3].Text);
-            Assert.AreEqual("test",     match.Parts[4].Text);
-            Assert.AreEqual(" x",       match.Parts[5].Text);
-            Assert.AreEqual("test",     match.Parts[6].Text);
+            Assert.AreEqual(4, match.Parts.Count);
+            Assert.AreEqual("this",             match.Parts[0].Text);
+            Assert.AreEqual("isa",              match.Parts[1].Text);
+            Assert.AreEqual("test",             match.Parts[2].Text);
+            Assert.AreEqual(" mytest xtest",    match.Parts[3].Text);
         }
 
         [TestMethod]
@@ -94,15 +88,12 @@ namespace VSNav.Tests
 
             var filename = "thisisatest mytest xtest";
             var match = func(filename);
-            Assert.AreEqual(7, match.Parts.Count);
+            Assert.AreEqual(4, match.Parts.Count);
             Assert.AreEqual(filename.Length,
                 match.Parts[0].Text.Length +
                 match.Parts[1].Text.Length +
                 match.Parts[2].Text.Length +
-                match.Parts[3].Text.Length +
-                match.Parts[4].Text.Length +
-                match.Parts[5].Text.Length +
-                match.Parts[6].Text.Length);
+                match.Parts[3].Text.Length);
         }
 
         [TestMethod]
@@ -112,6 +103,14 @@ namespace VSNav.Tests
 
             Assert.IsTrue(func("TestThis.txt").MatchPriority > func("Test.txt").MatchPriority);
             Assert.IsTrue(func("TestThis.txt").MatchPriority > func("TestThisToo.txt").MatchPriority);
+        }
+
+        [TestMethod]
+        public void RegexCountMatchOnce()
+        {
+            var func = StringMatch.GetShowStringDelegates("foo");
+
+            Assert.IsTrue(func("FooBar.txt").MatchPriority == func("FooFoo.txt").MatchPriority);
         }
     }
 }
