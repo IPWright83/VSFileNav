@@ -1,11 +1,11 @@
 # VSFileNav
 
-This is a simple extention to allow rapid navigation and finding of files within a Solution using a number of different search patterns.
+This is a simple extension to allow rapid navigation and finding of files within a Solution using a number of different search patterns.
 
 For more information please visit https://github.com/IPWright83/VSFileNav
 
 #### New Features
- - Multi montior support
+ - Multi monitor support
  - Multi search
 
 ### Features
@@ -16,11 +16,11 @@ VSFileNav supports a number of features including:
  - **Name Search** - Searches based upon the name of a file by simply using mixed case search string.
  - **Wildcard Search** - Use standard windows wildcards : `?` (any character) or `*` (number of any characters).
  - **Camel Case Search** - Use uppercase strings to do Camel case searching on file names.
- - **Mutli Search** - just put a space between multiple search terms.
+ - **Multi Search** - just put a space between multiple search terms.
  - **Highlighting** - Filtering as you type with match highlighting.
  - **Explore To** - Immediately explorer to the file on the file system
  - **Themes** - VSFileNav attempts to automatically detect your Visual Studio theme and colour itself appropriately
- - **Multi Montior** - Multi montor support has been added, the search dialog will remember both size and position
+ - **Multi Monitor** - Multi monitor support has been added, the search dialog will remember both size and position
  
 ### Getting Started
 
