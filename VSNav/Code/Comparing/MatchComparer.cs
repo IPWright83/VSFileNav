@@ -13,7 +13,7 @@ namespace VSNav
     {
         public int Compare(StringMatch x, StringMatch y)
         {
-            int compare = x.MatchFraction.CompareTo(y.MatchFraction);
+            int compare = x.MatchPriority.CompareTo(y.MatchPriority);
             return -compare;
         }
     }

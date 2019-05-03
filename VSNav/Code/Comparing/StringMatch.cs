@@ -16,17 +16,19 @@ namespace VSNav
 
         private StringMatch()
         {
-            this.Parts = new List<StringPart>();
+            Parts = new List<StringPart>();
         }
 
         /// <summary>
-        /// Used when no match takes place
+        /// Used when whole string is matched
         /// </summary>
-        public StringMatch(Double fraction, String fullString)
+        public StringMatch(String fullString)
             : this()
         {
-            this.MatchFraction = fraction;
-            this.Parts.Add(new StringPart(fullString, false));
+            MatchCharacters = 0;
+            MatchFraction = 1;
+            MatchPriority = 1;
+            Parts.Add(new StringPart(fullString, false));
         }
 
         /// <summary>
@@ -34,10 +36,10 @@ namespace VSNav
         /// </summary>
         public StringMatch(String fullString, List<int> matchChars, List<int> skipChars)
         {
-            this.Parts = new List<StringPart>();
-            this.MatchFraction = (double)(matchChars.Count - skipChars.Count);
+            Parts = new List<StringPart>();
+            MatchPriority = Math.Max(0.0, (double)(matchChars.Count - skipChars.Count));
 
-            if (matchChars[0] == 0) { this.MatchFraction++; }
+            if (matchChars[0] == 0) { MatchPriority++; }
 
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < fullString.Length; i++)
@@ -72,6 +74,10 @@ namespace VSNav
             {
                 Parts.Add(new StringPart(sb.ToString(), false));
             }
+
+            MatchCharacters = matchChars.Count;
+            MatchFraction = ((Double)MatchCharacters / (Double)fullString.Length);
+            MatchPriority += MatchCharacters + MatchFraction;
         }
 
         /// <summary>
@@ -80,25 +86,79 @@ namespace VSNav
         public StringMatch(String fullString, String matchString)
             : this()
         {
-            this.MatchFraction = ((double)matchString.Length / (double)fullString.Length);
-
             int startIndex = fullString.IndexOf(matchString.ToLower(), StringComparison.OrdinalIgnoreCase);
             int length = matchString.Length;
 
             // Get the 1st part of the String
             if (startIndex > 0)
             {
-                this.Parts.Add(new StringPart(fullString.Substring(0, startIndex), false));
+                Parts.Add(new StringPart(fullString.Substring(0, startIndex), false));
             }
 
             // Get the next matched part of the String
-            this.Parts.Add(new StringPart(fullString.Substring(startIndex, length), true));
+            Parts.Add(new StringPart(fullString.Substring(startIndex, length), true));
 
             // Get the last part of the String
             if (startIndex + length < fullString.Length)
             {
-                this.Parts.Add(new StringPart(fullString.Substring(startIndex + length), false));
+                Parts.Add(new StringPart(fullString.Substring(startIndex + length), false));
             }
+
+            MatchCharacters = length;
+            MatchFraction = ((Double)MatchCharacters / (Double)fullString.Length);
+            MatchPriority = MatchCharacters + MatchFraction;
+        }
+
+        /// <summary>
+        /// Used to combine multiple matches into the final result.
+        /// </summary>
+        private StringMatch(String fullString, List<StringMatch> matches)
+            : this()
+        {
+            int matchCount = 0;
+            bool isAddingMatches = false;
+            String subString = "";
+
+            for (int n = 0; n < fullString.Length; n++ )
+            {
+                bool matched = false;
+                foreach (var match in matches)
+                {
+                    if (match.IsMatchAt(n))
+                    {
+                        matched = true;
+                        matchCount++;
+                        break;
+                    }
+                }
+
+                if (matched != isAddingMatches)
+                {
+                    if (subString.Length > 0)
+                    {
+                        Parts.Add(new StringPart(subString, isAddingMatches));
+                    }
+                    subString = "";
+                    isAddingMatches = !isAddingMatches;
+                }
+
+                subString += fullString[n];
+            }
+
+            if (subString.Length > 0)
+            {
+                Parts.Add(new StringPart(subString, isAddingMatches));
+            }
+
+            MatchPriority = 0;
+            foreach (var match in matches)
+            {
+                MatchPriority = Math.Max(MatchPriority, match.MatchPriority);
+            }
+
+            MatchCharacters = matchCount;
+            MatchFraction = ((Double)MatchCharacters / (Double)fullString.Length);
+            MatchPriority += MatchCharacters + MatchFraction;
         }
 
         /// <summary>
@@ -123,8 +183,14 @@ namespace VSNav
                     matches.Add(match);
                 }
 
-                matches.Sort(new MatchComparer());
-                return matches.First();
+                if (matches.Count > 1)
+                {
+                    return new StringMatch(s, matches);
+                }
+                else
+                {
+                    return matches.First();
+                }
             };
         }
 
@@ -140,7 +206,7 @@ namespace VSNav
             {
                 return (s) =>
                 {
-                    return new StringMatch(1, s);
+                    return new StringMatch(s);
                 };
             }
 
@@ -201,7 +267,7 @@ namespace VSNav
                         // If we didn't find all the camels then we ignore this result
                         if (matchedChars.Count != pattern.Length)
                         {
-                            return new StringMatch(0, String.Empty);
+                            return new StringMatch();
                         }
                         else
                         {
@@ -224,7 +290,7 @@ namespace VSNav
                     {
                         return new StringMatch(s, pattern);
                     }
-                    return new StringMatch(0, String.Empty);
+                    return new StringMatch();
                 };
             }
 
@@ -249,16 +315,50 @@ namespace VSNav
                     return new StringMatch(s, match.Value);
                 }
 
-                return new StringMatch(0, String.Empty);
+                return new StringMatch();
             };
 
             #endregion
         }
 
         /// <summary>
-        /// The Percentage Match
+        /// Returns whether the character at position n is part of a match.
         /// </summary>
-        public Double MatchFraction;
+        private bool IsMatchAt(int n)
+        {
+            var isMatch = false;
+            var charInPart = n;
+
+            foreach (var part in Parts)
+            {
+                if (charInPart >= part.Text.Length)
+                {
+                    charInPart -= part.Text.Length;
+                }
+                else
+                {
+                    isMatch = part.MatchPart;
+                    break;
+                }
+            }
+
+            return isMatch;
+        }
+
+        /// <summary>
+        /// The number of characters matched.
+        /// </summary>
+        private int MatchCharacters;
+
+        /// <summary>
+        /// The total fraction of the filename that has been matched.
+        /// </summary>
+        private Double MatchFraction;
+
+        /// <summary>
+        /// The final order in the list, including the above character count.
+        /// </summary>
+        public Double MatchPriority { get; }
 
         /// <summary>
         /// The parts of the String

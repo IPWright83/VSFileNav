@@ -2,3 +2,6 @@ Backup
 UpgradeLog.htm
 */bin/
 */obj/
+.vs/
+[Tt]est[Rr]esults*/
+*.user
